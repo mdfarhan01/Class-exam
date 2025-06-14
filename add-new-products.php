@@ -11,23 +11,23 @@ $error = '';
 
 
 <?php
-echo "<pre>";
-print_r($_POST);
+// echo "<pre>";
+// print_r($_POST);
 
 
 
 
-if( $is_connect ){
+if( $is_connect = true ){
     $name = !empty($_POST['name'] ) ? $_POST['name'] : '';
     $description = !empty($_POST['description'] ) ? $_POST['description'] : '';
     $price = !empty($_POST['price'] ) ? $_POST['price'] : '';
     $image =  $_FILES['image'];
     $created_at = !empty($_POST['created_at'] ) ? $_POST['created_at'] : '';
 
-    echo "<pre>";
-    print_r($image);
-    echo "</pre>";
-    echo die();
+    // echo "<pre>";
+    // print_r($image);
+    // echo "</pre>";
+    // echo die();
 
     if(!empty($image['name'])) {
         // Target directory to save uploaded images
@@ -52,7 +52,7 @@ if( $is_connect ){
         }
 
         // Allow certain file formats
-        $allowedTypes     = ['jpg' ];
+        $allowedTypes     = ['jpg' , 'jpeg', 'png', 'gif'];
         if (!in_array($imageFileType, $allowedTypes)) {
             die("Only JPG, JPEG, PNG & GIF files are allowed.");
         }
@@ -67,6 +67,8 @@ if( $is_connect ){
         $targetFile       = null; // If no image is uploaded, set targetFile to null
     }
 
+}else {
+    die("Database connection failed.");
 }
 
 
@@ -88,16 +90,18 @@ if(empty($created_at)) {
 
 // add all fiedl data into the database 
 
-if( !$connect ){
-    die('Database configuration is missing.');
-}else{
+
     
-    $is_connect === true;
-    $sql = "INSERT INTO `products_table`(`name`, `description`, `price`, `image`, `created_at`) VALUES ('$name','$description','$price','$image','$created_at')";
-        if($connect->query($sql) === true){
-         header("Location: index.php");
+$is_connect = true;
+  
+    $sql = "INSERT INTO `products_table` (`name`, `description`, `price`, `image`, `created_at`) VALUES ('$name', '$description', '$price', '$targetFile', '$created_at');";
+    
+    if($connect->query($sql) == true){
+        echo"New Student Added Successfully";
+        header("Location: index.php");
+    } else {
+        echo "Error: " . $sql . "<br>" . $connect->error;
     }
-}
 
 
 

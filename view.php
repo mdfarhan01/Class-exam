@@ -1,69 +1,64 @@
-<!doctype html>
-<html lang="en" class="h-100">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+<?php 
 
-    <title>List of User</title>
-   
-  </head>
+require_once 'head.php';
+require_once 'config.php';
+
+?>
+
+
+<?php 
+
+  $is_connect = true;
+  if (!$is_connect) {
+      die("Connection failed: " . mysqli_connect_error());
+  }
+
+$id = $_GET['id']; // Get the student ID from the URL parameter
+$sql = "SELECT * FROM `products_table` WHERE id = " . $_GET['id']; // Example student ID from URL parameter
+$data =  $connect->query($sql);
+$get_data = mysqli_fetch_all($data, MYSQLI_ASSOC);
+$products = $get_data[0]; // Assuming you want to view the first book's details
+  
+
+//   echo "<pre>";
+//   print_r($get_data);
+
+
+
+?>
+
   <body class="d-flex flex-column h-100">
     
-    <div class="container pt-4 pb-4">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-            <a class="navbar-brand" href="#">HTML CRUD Template</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <div class="collapse navbar-collapse" id="navbarsExample09">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="create.html">Create</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://pisyek.com/contact">Help</a>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-md-0">
-                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-                </form>
-            </div>
-        </nav>
-    </div>
+
         
-    <main role="main" class="flex-shrink-0">
+    <main role="main" class="flex-shrink-0 pt-4 pb-4">
         <div class="container">
-            <h1>View User Detail</h1>
-            <p>Name: Pisyek</p>
-            <p>Email: pisyek@gmail.com</p>
+            <h1>View Products Detail</h1>
+            <p>ID: <?php echo $products['id'];?></p>
+            <p>Name: <?php echo $products['name'];?></p>
+            <p>Description: <?php echo $products['description'];?></p>
+            <p>Price: <?php echo $products['price'];?></p>
+            <p class="w">Image: <img src="<?php echo $products['image']; ?>"></p>
+            <p>Created At: <?php echo $products['created_at'];?></p>
         </div>
+        <div class="container">
+            <a href="index.php"><button class="btn btn-primary">Back to Products List</button></a>
     </main>
       
-    <footer class="footer mt-auto py-3">
-        <div class="container pb-5">
-            <hr>
-            <span class="text-muted">
-                    Copyright &copy; 2019 | <a href="https://pisyek.com">Pisyek.com</a>
-            </span>
-        </div>
-    </footer>
+ <?php require_once 'footer.php'; ?>
 
-    
-    <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-  </body>
-</html>
+   <style>
+        .w{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    display: inline-block;
+    padding: 15px 0; 
+}   
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>

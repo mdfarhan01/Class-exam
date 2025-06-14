@@ -2,6 +2,25 @@
 <?php 
 
 require_once 'head.php';
+require_once 'config.php';
+
+?>
+
+<?php 
+
+  $is_connect = true;
+  if (!$is_connect) {
+      die("Connection failed: " . mysqli_connect_error());
+  }
+  $sql = "SELECT * FROM `products_table`";
+  $data = $connect->query($sql);
+  $get_data = mysqli_fetch_all($data,);
+  
+
+//   echo "<pre>";
+//   print_r($get_data);
+
+
 
 ?>
 
@@ -18,7 +37,8 @@ require_once 'head.php';
                 </div>
             </div>
             <table class="table table-striped table-hover">
-                <thead>
+
+                    <thead>
                     <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Product Name</th>
@@ -27,19 +47,21 @@ require_once 'head.php';
                     <th scope="col">Action</th>
                     </tr>
                 </thead>
+                    <?php foreach($data as $products) : ?> 
                 <tbody>
                     <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
+                    <th scope="row"><?php echo $products['id']; ?></th>
+                    <td><?php echo $products['name']; ?></td>
+                    <td><?php echo $products['price']; ?></td>
+                    <td class="w"><img src="<?php echo $products['image']; ?>"></td>
                     <td>
-                        <a href="view.php"><button class="btn btn-primary btn-sm">View</button></a>
+                        <a href="view.php?id=<?php echo $products['id'];?>"><button class="btn btn-primary btn-sm">View</button></a>
                         <a href="edit.php"><button class="btn btn-outline-primary btn-sm">Edit</button></a>
                         <button class="btn btn-sm">Delete</button>
                     </td>
                     </tr>
                 </tbody>
+              <?php endforeach; ?>
             </table>
         </div>
     </main>
@@ -47,5 +69,18 @@ require_once 'head.php';
    
 
 
+ <?php require_once 'footer.php'; ?>
+   
 
-    <?php require_once 'footer.php'; ?>
+
+    <style>
+        .w{
+    width: 100px;
+    height: 100px;
+}   
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>

@@ -1,75 +1,81 @@
-<!doctype html>
-<html lang="en" class="h-100">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+<?php 
 
-    <title>List of User</title>
-   
-  </head>
-  <body class="d-flex flex-column h-100">
-    
-    <div class="container pt-4 pb-4">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
-            <a class="navbar-brand" href="#">HTML CRUD Template</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <div class="collapse navbar-collapse" id="navbarsExample09">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="create.html">Create</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://pisyek.com/contact">Help</a>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-md-0">
-                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-                </form>
-            </div>
-        </nav>
-    </div>
-        
+require_once 'head.php';
+require_once 'config.php';
+
+?>
+
+
+
+<?php 
+
+  $is_connect = true;
+  if (!$is_connect) {
+      die("Connection failed: " . mysqli_connect_error());
+  }
+
+
+  $id = $_GET['id']; // Get the student ID from the URL parameter
+$sql = "SELECT * FROM `products_table` WHERE id = " . $_GET['id']; // Example student ID from URL parameter
+$data = $connect->query($sql);
+$get_data = mysqli_fetch_all($data, MYSQLI_ASSOC);
+$products = $get_data[0]; // Assuming you want to edit the first student's details
+
+  
+//   echo "<pre>";
+//   print_r($get_data);
+
+?>
+
+  <body class="d-flex flex-column h-100">     
     <main role="main" class="flex-shrink-0">
         <div class="container">
-            <h1>Edit User</h1>
-            <form action="" method="POST">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" value="Nama saya Pisyek" placeholder="Enter name">
-                    <small class="form-text text-muted">Help message here.</small>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <h1>Edit Prodcuts</h1>
+            <form action="add-new-products.php" method="POST" enctype="multipart/form-data" class="pt-3">
+            
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="<?php echo $products['name']; ?>" placeholder="Enter name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" name="price" placeholder="Enter price" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="created_at">Created At</label>
+                <input type="date" class="form-control" id="created_at" name="created_at" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Add New Product</button>
             </form>
         </div>
     </main>
       
-    <footer class="footer mt-auto py-3">
-        <div class="container pb-5">
-            <hr>
-            <span class="text-muted">
-                    Copyright &copy; 2019 | <a href="https://pisyek.com">Pisyek.com</a>
-            </span>
-        </div>
-    </footer>
+ <?php require_once 'footer.php'; ?>
+   
 
-    
-    <script src="assets/js/jquery-3.3.1.slim.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-  </body>
-</html>
+
+    <style>
+        .w{
+    width: 100px;
+    height: 100px;
+}   
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
