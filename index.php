@@ -57,7 +57,7 @@ require_once 'config.php';
                     <td>
                         <a href="view.php?id=<?php echo $products['id'];?>"><button class="btn btn-primary btn-sm">View</button></a>
                         <a href="edit.php?id=<?php echo $products['id'];?>"><button class="btn btn-outline-primary btn-sm">Edit</button></a>
-                        <button class="btn btn-sm">Delete</button>
+                        <a href="delete.php?id=<?php echo $products['id'];?>"><button class="btn btn-outline-primary btn-sm">Delete</button></a>
                     </td>
                     </tr>
                 </tbody>
