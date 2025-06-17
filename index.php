@@ -56,7 +56,7 @@ require_once 'config.php';
                     <td class="w"><img src="<?php echo $products['image']; ?>"></td>
                     <td>
                         <a href="view.php?id=<?php echo $products['id'];?>"><button class="btn btn-primary btn-sm">View</button></a>
-                        <a href="edit.php"><button class="btn btn-outline-primary btn-sm">Edit</button></a>
+                        <a href="edit.php?id=<?php echo $products['id'];?>"><button class="btn btn-outline-primary btn-sm">Edit</button></a>
                         <button class="btn btn-sm">Delete</button>
                     </td>
                     </tr>

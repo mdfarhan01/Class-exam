@@ -9,7 +9,9 @@ require_once 'head.php';
   <div class="container pt-5">
     <h1>Create New Products</h1>
     <form action="add-new-products.php" method="POST" enctype="multipart/form-data" class="pt-3">
-      
+      <div class="form-group">
+        <label for="name">Name</label>
+      </div>
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
